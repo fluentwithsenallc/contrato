@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acuerdo de Coaching · Fluent with Sena</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #0b1220; --navy-card: #0f1a2e; --navy-surface: #132035;
+  --navy-deep: #070d18; --white: #f4f1ec; --white-pure: #ffffff;
+  --border: rgba(244,241,236,0.25); --border-soft: rgba(255,255,255,0.1);
+  --muted: #ffffff; --error: #e8856a;
+}
+html { background: var(--navy-deep); min-height: 100%; }
+body {
+  background: var(--navy-deep); color: var(--white);
+  font-family: 'DM Sans', sans-serif; font-size: 17px;
+  line-height: 1.6; min-height: 100vh; padding: 2rem 1rem 4rem;
+}
+body::before {
+  content: ''; position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0; opacity: 0.4;
+}
+.outer { position: relative; z-index: 1; max-width: 850px; margin: 0 auto; }
+
+/* ACCESS GATE */
+.gate {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 2rem 1rem;
+}
+.gate-card {
+  background: var(--navy-card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 3rem 2.5rem; max-width: 420px; width: 100%;
+  text-align: center; position: relative; overflow: hidden;
+}
+.gate-card::before {
+  content: ''; position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+  width: 300px; height: 160px;
+  background: radial-gradient(ellipse, rgba(255,255,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.gate-brand { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--white-pure); font-weight: 600; margin-bottom: 16px; }
+.gate-title { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--white-pure); margin-bottom: 8px; }
+.gate-sub { font-size: 14px; color: rgba(255,255,255,0.65); margin-bottom: 2rem; line-height: 1.6; }
+.gate-input {
+  background: var(--navy-surface); border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 10px; padding: 14px 16px; color: var(--white-pure);
+  font-size: 16px; font-family: 'DM Sans', sans-serif;
+  outline: none; width: 100%; margin-bottom: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  text-align: center; letter-spacing: 0.08em;
+}
+.gate-input:focus { border-color: var(--white); box-shadow: 0 0 0 3px rgba(255,255,255,0.1); }
+.gate-input::placeholder { color: rgba(255,255,255,0.3); letter-spacing: 0.04em; }
+.gate-btn {
+  display: block; width: 100%; padding: 15px;
+  background: var(--white); color: #0a1120;
+  font-size: 13px; font-weight: 700; font-family: 'DM Sans', sans-serif;
+  border: none; border-radius: 12px; cursor: pointer;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  transition: opacity 0.2s; margin-bottom: 12px;
+}
+.gate-btn:hover { opacity: 0.86; }
+.gate-error {
+  font-size: 13px; color: var(--error); display: none; margin-top: 8px;
+}
+.gate-hint { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 12px; }
+
+/* HEADER */
+.header {
+  text-align: center; padding: 2.5rem 2rem 2rem;
+  background: var(--navy-card); border: 1px solid var(--border);
+  border-radius: 20px; margin-bottom: 1.5rem;
+  position: relative; overflow: hidden;
+}
+.header::before {
+  content: ''; position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+  width: 300px; height: 160px;
+  background: radial-gradient(ellipse, rgba(255,255,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-brand { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--white-pure); font-weight: 600; margin-bottom: 10px; }
+.header-title { font-family: 'DM Serif Display', serif; font-size: 34px; color: var(--white-pure); line-height: 1.2; margin-bottom: 4px; }
+.header-title-es { font-size: 17px; color: var(--white-pure); margin-bottom: 10px; }
+.header-contact { font-size: 15px; color: var(--white-pure); letter-spacing: 0.04em; }
+.header-rule { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 1.5rem 0 0; }
+
+/* STEP BAR */
+.step-bar {
+  display: flex; align-items: center;
+  background: var(--navy-card); border: 1px solid var(--border-soft);
+  border-radius: 14px; padding: 1.1rem 1rem; margin-bottom: 1.5rem;
+}
+.step { display: flex; flex-direction: column; align-items: center; gap: 5px; flex: 1; }
+.step-dot {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600;
+  border: 1.5px solid rgba(255,255,255,0.35); color: rgba(255,255,255,0.7);
+  background: var(--navy-surface); transition: all 0.35s ease;
+}
+.step-dot.active { background: var(--white); color: var(--navy); border-color: var(--white); box-shadow: 0 0 16px rgba(255,255,255,0.3); }
+.step-dot.done { background: transparent; color: var(--white); border-color: var(--white); }
+.step-label { font-size: 11px; color: rgba(255,255,255,0.7); font-weight: 500; letter-spacing: 0.04em; text-align: center; transition: color 0.3s; }
+.step-label.active { color: var(--white); }
+.step-line { flex: 1; height: 1px; background: rgba(255,255,255,0.2); margin: 0 3px; margin-bottom: 22px; transition: background 0.4s; }
+.step-line.done { background: rgba(255,255,255,0.6); }
+
+/* PANEL */
+.panel { background: var(--navy-card); border: 1px solid var(--border); border-radius: 18px; padding: 1.75rem 2rem; margin-bottom: 1.25rem; }
+.panel-title {
+  font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--white-pure); font-weight: 600; margin-bottom: 1.25rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.panel-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* FIELDS */
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.field:last-child { margin-bottom: 0; }
+label { font-size: 13px; color: var(--white-pure); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+input[type="text"], input[type="email"] {
+  background: var(--navy-surface); border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 10px; padding: 13px 16px; color: var(--white-pure);
+  font-size: 16px; font-family: 'DM Sans', sans-serif;
+  outline: none; transition: border-color 0.2s, box-shadow 0.2s; width: 100%;
+}
+input:focus { border-color: var(--white); box-shadow: 0 0 0 3px rgba(255,255,255,0.1); }
+input::placeholder { color: rgba(255,255,255,0.35); }
+.error-msg { font-size: 13px; color: var(--error); margin-top: 3px; display: none; }
+
+/* TIER CARDS */
+.tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.tier-card {
+  border: 1.5px solid rgba(255,255,255,0.2); border-radius: 14px;
+  padding: 1.1rem 0.9rem; cursor: pointer; transition: all 0.2s;
+  text-align: center; background: var(--navy-surface); position: relative;
+}
+.tier-card:hover { border-color: rgba(255,255,255,0.45); }
+.tier-card.selected { border-color: var(--white); background: rgba(255,255,255,0.07); box-shadow: 0 0 20px rgba(255,255,255,0.1); }
+.tier-card.locked { cursor: default; opacity: 0.7; }
+.tier-card.locked:hover { border-color: rgba(255,255,255,0.2); }
+.tier-name { font-size: 17px; font-weight: 600; color: var(--white-pure); margin-bottom: 3px; }
+.tier-weeks { font-size: 13px; color: var(--white-pure); font-weight: 500; margin-bottom: 5px; }
+.tier-price { font-size: 15px; color: var(--white-pure); }
+.tier-popular {
+  position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+  background: var(--white); color: var(--navy);
+  font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 3px 10px; border-radius: 20px;
+}
+.prefilled-note { font-size: 14px; color: var(--white-pure); margin-top: 12px; text-align: center; }
+
+/* PLAN CARDS */
+.plan-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.plan-card {
+  border: 1.5px solid rgba(255,255,255,0.2); border-radius: 14px;
+  padding: 1.1rem 0.9rem; cursor: pointer; transition: all 0.2s;
+  text-align: center; background: var(--navy-surface);
+}
+.plan-card:hover { border-color: rgba(255,255,255,0.45); }
+.plan-card.selected { border-color: var(--white); background: rgba(255,255,255,0.07); box-shadow: 0 0 20px rgba(255,255,255,0.1); }
+.plan-card.locked { cursor: default; opacity: 0.7; }
+.plan-card.locked:hover { border-color: rgba(255,255,255,0.2); }
+.plan-name { font-size: 16px; font-weight: 700; color: var(--white-pure); margin-bottom: 4px; }
+.plan-sub { font-size: 13px; color: var(--white-pure); line-height: 1.5; margin-bottom: 6px; }
+.plan-badge {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 20px;
+  background: rgba(255,255,255,0.15); color: var(--white-pure);
+}
+
+/* PAYMENT SUMMARY */
+.payment-summary {
+  background: var(--navy-surface); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 14px; overflow: hidden; margin-top: 1.25rem;
+}
+.payment-summary-header {
+  padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--white-pure); font-weight: 600;
+  display: flex; justify-content: space-between;
+}
+.payment-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.07); font-size: 15px;
+}
+.payment-row:last-child { border-bottom: none; }
+.payment-row .p-label { color: var(--white-pure); }
+.payment-row .p-amount { color: var(--white-pure); font-weight: 600; }
+.payment-total {
+  padding: 14px 16px; background: rgba(255,255,255,0.05);
+  border-top: 1px solid rgba(255,255,255,0.12);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.payment-total .t-label { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white-pure); font-weight: 600; }
+.payment-total .t-amount { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--white-pure); }
+.discount-badge {
+  display: inline-block; font-size: 12px; font-weight: 600;
+  background: rgba(255,255,255,0.15); color: var(--white-pure);
+  padding: 3px 10px; border-radius: 20px; margin-left: 8px; vertical-align: middle; letter-spacing: 0.06em;
+}
+
+/* CONTRACT SCROLL */
+.contract-scroll {
+  background: var(--navy-surface); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; padding: 1.5rem 1.75rem;
+  max-height: 420px; overflow-y: auto; margin-bottom: 1rem;
+  scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.4) transparent;
+}
+.contract-scroll::-webkit-scrollbar { width: 4px; }
+.contract-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.4); border-radius: 4px; }
+.clause { margin-bottom: 1.35rem; padding-bottom: 1.35rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.clause:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.clause-title { font-size: 15px; font-weight: 700; color: var(--white-pure); margin-bottom: 8px; }
+.lang-block { margin-bottom: 6px; }
+.lang-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 3px; color: var(--white-pure); }
+.lang-text-es { font-size: 15px; color: var(--white-pure); line-height: 1.75; }
+.lang-text-en { font-size: 14px; color: var(--white-pure); line-height: 1.7; }
+.scroll-note { font-size: 13px; color: var(--white-pure); text-align: center; margin-bottom: 8px; }
+
+/* TOGGLE ROW */
+.toggle-row {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: var(--navy-surface); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px; padding: 13px 15px; cursor: pointer;
+  user-select: none; transition: border-color 0.2s; margin-bottom: 10px;
+}
+.toggle-row:hover { border-color: rgba(255,255,255,0.45); }
+.toggle-row.checked { border-color: var(--white); background: rgba(255,255,255,0.05); }
+.check-box {
+  width: 22px; height: 22px; border-radius: 5px; flex-shrink: 0;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; transition: all 0.2s; margin-top: 1px;
+}
+.check-box.checked { background: var(--white); border-color: var(--white); }
+.check-box svg { display: none; }
+.check-box.checked svg { display: block; }
+.toggle-body { font-size: 15px; line-height: 1.65; }
+.toggle-body .t-es { color: var(--white-pure); display: block; margin-bottom: 3px; }
+.toggle-body .t-en { color: var(--white-pure); font-size: 14px; display: block; }
+
+/* SIGNATURE */
+.sig-area {
+  background: var(--navy-surface); border: 1.5px dashed rgba(255,255,255,0.3);
+  border-radius: 12px; padding: 1.25rem 1.5rem;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.sig-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.sig-line { display: flex; flex-direction: column; gap: 5px; }
+.sig-label { font-size: 12px; color: var(--white-pure); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+.sig-input {
+  background: transparent; border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.4);
+  border-radius: 0; padding: 7px 0; color: var(--white-pure);
+  font-size: 20px; font-family: 'DM Serif Display', serif;
+  outline: none; width: 100%; transition: border-color 0.2s;
+}
+.sig-input:focus { border-color: var(--white); }
+.sig-input::placeholder { color: rgba(255,255,255,0.3); font-size: 17px; font-family: 'DM Sans', sans-serif; }
+.sig-coach { padding: 7px 0; font-size: 20px; font-family: 'DM Serif Display', serif; color: var(--white-pure); border-bottom: 1px solid rgba(255,255,255,0.4); }
+.sig-static { font-size: 15px; color: var(--white-pure); padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+
+/* INFO BOX */
+.info-box {
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.1rem 1.35rem;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.info-icon { color: var(--white-pure); flex-shrink: 0; margin-top: 1px; }
+.info-es { font-size: 15px; color: var(--white-pure); line-height: 1.65; margin-bottom: 6px; }
+.info-en { font-size: 14px; color: var(--white-pure); line-height: 1.65; }
+.info-es strong, .info-en strong { font-weight: 600; color: var(--white-pure); }
+
+/* BUTTONS */
+.btn-primary {
+  display: block; width: 100%; padding: 17px;
+  background: var(--white); color: #0a1120;
+  font-size: 15px; font-weight: 700; font-family: 'DM Sans', sans-serif;
+  border: none; border-radius: 12px; cursor: pointer;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  transition: opacity 0.2s, transform 0.1s; margin-top: 1.25rem; text-align: center;
+}
+.btn-primary:hover { opacity: 0.86; }
+.btn-primary:active { transform: scale(0.99); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-back {
+  display: block; width: 100%; padding: 15px;
+  background: #132035; color: var(--white-pure);
+  font-size: 15px; font-weight: 500; font-family: 'DM Sans', sans-serif;
+  border: 1px solid rgba(244,241,236,0.35); border-radius: 12px; cursor: pointer;
+  letter-spacing: 0.06em; transition: background 0.2s, border-color 0.2s;
+  margin-top: 10px; text-align: center;
+}
+.btn-back:hover { background: #1a2b42; border-color: rgba(244,241,236,0.65); }
+
+/* SUCCESS */
+.success-wrap { text-align: center; padding: 2.5rem 1.5rem; }
+.success-icon-ring {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: rgba(255,255,255,0.08); border: 1.5px solid var(--white);
+  display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;
+}
+.success-icon-ring svg { width: 32px; height: 32px; }
+.success-title { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--white-pure); margin-bottom: 6px; }
+.success-sub-es { font-size: 16px; color: var(--white-pure); margin-bottom: 1.25rem; line-height: 1.7; }
+.success-sub-en { font-size: 15px; color: var(--white-pure); margin-bottom: 1.75rem; line-height: 1.7; }
+.signed-summary {
+  background: var(--navy-surface); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; padding: 1.1rem 1.35rem; margin: 1.25rem 0; text-align: left;
+}
+.summary-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.07); font-size: 15px;
+}
+.summary-row:last-child { border-bottom: none; }
+.summary-key { color: var(--white-pure); }
+.summary-val { color: var(--white-pure); font-weight: 500; text-align: right; max-width: 60%; }
+.summary-val.sig-font { font-family: 'DM Serif Display', serif; font-size: 19px; }
+.contact-footer { font-size: 14px; color: var(--white-pure); margin-top: 1.5rem; }
+.contact-footer a { color: var(--white-pure); text-decoration: none; font-weight: 500; }
+.contact-footer a:hover { text-decoration: underline; }
+
+/* PAGES */
+.page { display: none; }
+.page.active { display: block; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+
+@media (max-width: 520px) {
+  body { padding: 1rem 0.75rem 3rem; }
+  .panel { padding: 1.25rem; }
+  .header { padding: 1.75rem 1.25rem 1.5rem; }
+  .header-title { font-size: 22px; }
+  .field-row, .tier-grid, .plan-grid, .sig-row { grid-template-columns: 1fr; }
+  .step-bar { padding: 0.9rem 0.5rem; }
+  .step-label { font-size: 10px; }
+  .gate-card { padding: 2rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── ACCESS GATE ── -->
+<div class="gate" id="gateWrap">
+  <div class="gate-card">
+    <div class="gate-brand">Fluent with Sena</div>
+    <div class="gate-title">Client Portal</div>
+    <div class="gate-sub">Ingresa tu código de acceso para continuar.<br>Enter your access code to continue.</div>
+    <input type="password" class="gate-input" id="gateInput" placeholder="Código de acceso" onkeydown="if(event.key==='Enter')checkCode()">
+    <button class="gate-btn" onclick="checkCode()">Continuar / Continue →</button>
+    <div class="gate-error" id="gateError">Código incorrecto. Verifica con Sena. / Incorrect code. Check with Sena.</div>
+    <div class="gate-hint">¿No tienes un código? Escríbele a Sena.<br>Don't have a code? Message Sena.</div>
+  </div>
+</div>
+
+<!-- ── MAIN CONTRACT (hidden until code entered) ── -->
+<div class="outer" id="mainContract" style="display:none;">
+
+  <div class="header">
+    <div class="header-brand">Fluent with Sena</div>
+    <div class="header-title">Client Coaching Agreement</div>
+    <div class="header-title-es">Acuerdo de Coaching para Clientes</div>
+    <div class="header-contact">sena@fluentwithsena.com &nbsp;·&nbsp; fluentwithsena.com</div>
+    <div class="header-rule"></div>
+  </div>
+
+  <div class="step-bar">
+    <div class="step"><div class="step-dot active" id="dot1">1</div><div class="step-label active" id="lbl1">Info</div></div>
+    <div class="step-line" id="line1"></div>
+    <div class="step"><div class="step-dot" id="dot2">2</div><div class="step-label" id="lbl2">Programa</div></div>
+    <div class="step-line" id="line2"></div>
+    <div class="step"><div class="step-dot" id="dot3">3</div><div class="step-label" id="lbl3">Acuerdo</div></div>
+    <div class="step-line" id="line3"></div>
+    <div class="step"><div class="step-dot" id="dot4">4</div><div class="step-label" id="lbl4">Pagos</div></div>
+    <div class="step-line" id="line4"></div>
+    <div class="step"><div class="step-dot" id="dot5">5</div><div class="step-label" id="lbl5">Firma</div></div>
+    <div class="step-line" id="line5"></div>
+    <div class="step"><div class="step-dot" id="dot6">✓</div><div class="step-label" id="lbl6">Listo</div></div>
+  </div>
+
+  <!-- PAGE 1 -->
+  <div class="page active" id="page1">
+    <div class="panel">
+      <div class="panel-title">Tu información · Your information</div>
+      <div class="field-row">
+        <div class="field">
+          <label>Nombre / First name *</label>
+          <input type="text" id="firstName" placeholder="María" autocomplete="given-name">
+          <div class="error-msg" id="err-firstName">Requerido / Required</div>
+        </div>
+        <div class="field">
+          <label>Primer apellido / First surname *</label>
+          <input type="text" id="lastName1" placeholder="Rodríguez" autocomplete="family-name">
+          <div class="error-msg" id="err-lastName1">Requerido / Required</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Segundo apellido / Second surname</label>
+          <input type="text" id="lastName2" placeholder="Gómez (opcional)">
+        </div>
+        <div class="field">
+          <label>Correo / Email *</label>
+          <input type="email" id="email" placeholder="maria@ejemplo.com" autocomplete="email">
+          <div class="error-msg" id="err-email">Correo inválido / Invalid email</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>WhatsApp</label>
+        <input type="text" id="phone" placeholder="+1 (555) 000-0000" autocomplete="tel">
+      </div>
+    </div>
+    <button class="btn-primary" onclick="goTo(2)">Continuar / Continue →</button>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page" id="page2">
+    <div class="panel">
+      <div class="panel-title">Tu programa · Your program</div>
+      <div class="tier-grid" id="tierGrid">
+        <div class="tier-card" id="tier-Launch" onclick="selectTier('Launch')">
+          <div class="tier-name">Launch</div>
+          <div class="tier-weeks">12 semanas</div>
+          <div class="tier-price">$1,500</div>
+        </div>
+        <div class="tier-card" id="tier-Build" onclick="selectTier('Build')">
+          <div class="tier-popular">Popular</div>
+          <div class="tier-name">Build</div>
+          <div class="tier-weeks">16 semanas</div>
+          <div class="tier-price">$2,200</div>
+        </div>
+        <div class="tier-card" id="tier-Lead" onclick="selectTier('Lead')">
+          <div class="tier-name">Lead</div>
+          <div class="tier-weeks">20 semanas</div>
+          <div class="tier-price">$3,000</div>
+        </div>
+      </div>
+      <div class="error-msg" id="err-tier" style="display:none;margin-top:12px;">Selecciona un programa / Please select a program</div>
+      <div class="prefilled-note" id="tierNote" style="display:none;">Tu programa fue pre-seleccionado por Sena · Pre-selected by Sena</div>
+    </div>
+    <div class="panel" id="tierDetail" style="display:none;animation:fadeUp 0.3s ease;">
+      <div class="panel-title">Incluido · What's included</div>
+      <div id="tierIncludes" style="font-size:13px;color:var(--white-pure);line-height:1.95;"></div>
+    </div>
+    <button class="btn-primary" onclick="goTo(3)">Continuar / Continue →</button>
+    <button class="btn-back" onclick="goTo(1)">← Volver / Back</button>
+  </div>
+
+  <!-- PAGE 3 -->
+  <div class="page" id="page3">
+    <div class="panel">
+      <div class="panel-title">Acuerdo completo · Full agreement</div>
+      <div style="font-size:14px;color:#ffffff;margin-bottom:12px;line-height:1.65;background:#132035;padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);">
+        <span style="color:#ffffff;font-weight:500;">Lee cada sección con atención.</span> La versión en español es de referencia; el inglés es la versión legalmente vinculante.<br>
+        <span style="color:#ffffff;">Read each section carefully. English is the legally binding version; Spanish is provided for reference.</span>
+      </div>
+      <div class="scroll-note">↓ Desplázate para leer todo el acuerdo / Scroll to read the full agreement</div>
+      <div class="contract-scroll" id="contractText"></div>
+      <div class="toggle-row" id="readRow" onclick="toggleCheck('readRow','readBox','readConfirmed')">
+        <div class="check-box" id="readBox">
+          <svg viewBox="0 0 12 10" fill="none" stroke="#0a1120" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="12" height="10"><polyline points="1,5 4.5,8.5 11,1"/></svg>
+        </div>
+        <div class="toggle-body">
+          <span class="t-es">He leído y entiendo el acuerdo completo.</span>
+          <span class="t-en">I have read and understood the full agreement.</span>
+        </div>
+      </div>
+      <div class="error-msg" id="err-read" style="display:none;">Por favor confirma que leíste el acuerdo / Please confirm you read the agreement</div>
+    </div>
+    <button class="btn-primary" onclick="goTo(4)">Continuar / Continue →</button>
+    <button class="btn-back" onclick="goTo(2)">← Volver / Back</button>
+  </div>
+
+  <!-- PAGE 4 -->
+  <div class="page" id="page4">
+    <div class="panel">
+      <div class="panel-title">Plan de pagos · Payment plan</div>
+      <div class="plan-grid" id="planGrid">
+        <div class="plan-card" id="plan-full" onclick="selectPlan('full')">
+          <div class="plan-name">Pago completo</div>
+          <div class="plan-sub">Full payment upfront</div>
+          <div class="plan-badge">Ahorra 5%</div>
+        </div>
+        <div class="plan-card" id="plan-split" onclick="selectPlan('split')">
+          <div class="plan-name">Dos cuotas</div>
+          <div class="plan-sub">Split in two</div>
+          <div class="plan-badge">Popular</div>
+        </div>
+        <div class="plan-card" id="plan-monthly" onclick="selectPlan('monthly')">
+          <div class="plan-name">Mensual</div>
+          <div class="plan-sub">Monthly</div>
+          <div class="plan-badge">Flexible</div>
+        </div>
+      </div>
+      <div class="error-msg" id="err-plan" style="display:none;margin-top:10px;">Selecciona un plan / Please select a plan</div>
+      <div class="prefilled-note" id="planNote" style="display:none;">Tu plan fue pre-seleccionado por Sena · Pre-selected by Sena</div>
+      <div id="paymentSummaryWrap"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Confirmación · Confirmation</div>
+      <div class="toggle-row" id="payRow" onclick="toggleCheck('payRow','payBox','payConfirmed')">
+        <div class="check-box" id="payBox">
+          <svg viewBox="0 0 12 10" fill="none" stroke="#0a1120" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="12" height="10"><polyline points="1,5 4.5,8.5 11,1"/></svg>
+        </div>
+        <div class="toggle-body">
+          <span class="t-es">He revisado mi plan de pagos y confirmo que los montos son correctos.</span>
+          <span class="t-en">I have reviewed my payment plan and confirm the amounts are correct.</span>
+        </div>
+      </div>
+      <div class="error-msg" id="err-pay" style="display:none;">Por favor confirma tu plan de pagos / Please confirm your payment plan</div>
+    </div>
+    <button class="btn-primary" onclick="goTo(5)">Continuar / Continue →</button>
+    <button class="btn-back" onclick="goTo(3)">← Volver / Back</button>
+  </div>
+
+  <!-- PAGE 5 -->
+  <div class="page" id="page5">
+    <div class="panel">
+      <div class="panel-title">Permiso opcional · Optional permission</div>
+      <div style="font-size:14px;color:#ffffff;margin-bottom:12px;">Opcional — puedes dejar sin marcar. / Optional — you may leave unchecked.</div>
+      <div class="toggle-row" id="mediaRow" onclick="toggleCheck('mediaRow','mediaBox','mediaConsent')">
+        <div class="check-box" id="mediaBox">
+          <svg viewBox="0 0 12 10" fill="none" stroke="#0a1120" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="12" height="10"><polyline points="1,5 4.5,8.5 11,1"/></svg>
+        </div>
+        <div class="toggle-body">
+          <span class="t-es">Autorizo a Fluent with Sena a usar mi nombre, inicial de apellido, imagen y materiales visuales en los que aparezca con fines de marketing y comunicación pública.</span>
+          <span class="t-en">I authorize Fluent with Sena to use my first name, last initial, likeness, and visual materials in which I appear for marketing and public communications purposes.</span>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Firma electrónica · Electronic signature</div>
+      <div style="font-size:15px;color:#ffffff;margin-bottom:1.35rem;line-height:1.7;">
+        <span style="color:#ffffff;font-weight:500;">Al firmar confirmas que aceptas todos los términos del acuerdo y el plan de pagos detallado en el paso anterior.</span><br>
+        <span style="color:#ffffff;font-size:14px;">By signing you confirm you agree to all terms of the agreement and the payment plan detailed in the previous step. Your typed name is a legally binding electronic signature.</span>
+      </div>
+      <div class="sig-area">
+        <div class="sig-row">
+          <div class="sig-line">
+            <div class="sig-label">Firma del cliente · Client signature</div>
+            <input type="text" class="sig-input" id="sigClient" placeholder="Tu nombre completo">
+            <div class="error-msg" id="err-sig" style="display:none;">Firma requerida / Signature required</div>
+          </div>
+          <div class="sig-line">
+            <div class="sig-label">Coach</div>
+            <div class="sig-coach">Sena Carlson</div>
+          </div>
+        </div>
+        <div class="sig-row">
+          <div class="sig-line">
+            <div class="sig-label">Fecha · Date</div>
+            <div class="sig-static" id="sigDate"></div>
+          </div>
+          <div class="sig-line">
+            <div class="sig-label">Plataforma</div>
+            <div class="sig-static">fluentwithsena.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Pago · Payment</div>
+      <div class="info-box">
+        <div class="info-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div>
+          <div class="info-es">Sena te enviará el enlace de pago a tu correo en las próximas horas. Métodos aceptados: <strong>Link · Tarjetas de crédito · Transferencias bancarias</strong>.</div>
+          <div class="info-en">Sena will send your payment link via email within a few hours. Accepted: <strong>Link · All major credit cards · Bank transfers</strong>.</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn-primary" id="submitBtn" onclick="signContract()">Firmar y enviar / Sign & submit ✦</button>
+    <button class="btn-back" onclick="goTo(4)">← Volver / Back</button>
+  </div>
+
+  <!-- PAGE 6 -->
+  <div class="page" id="page6">
+    <div class="panel">
+      <div class="success-wrap">
+        <div class="success-icon-ring">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="success-title">Acuerdo firmado · Agreement signed</div>
+        <div class="success-sub-es">
+          Se envió una copia a <strong id="successEmail" style="color:#ffffff"></strong>.<br>
+          Sena te enviará el enlace de pago en las próximas horas.<br>
+          <strong style="color:#ffffff;">Una vez confirmado tu primer pago, tu Fluency Hub se desbloqueará.</strong>
+        </div>
+        <div class="success-sub-en">
+          A signed copy was sent to <strong id="successEmail2" style="color:#ffffff"></strong>.<br>
+          Sena will send your payment link within a few hours.<br>
+          <strong style="color:#ffffff;">Once your first payment is confirmed, your Fluency Hub will unlock.</strong>
+        </div>
+        <div class="signed-summary" id="signedSummary"></div>
+        <div class="contact-footer">¿Preguntas? / Questions? &nbsp;<a href="mailto:sena@fluentwithsena.com">sena@fluentwithsena.com</a></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /outer -->
+
+<script>
+var MAKE_WEBHOOK = 'https://hook.us2.make.com/07ji5swhajrdnaa245flawp4jdspp587';
+var ACCESS_CODE  = 'fluent2026';
+
+var sel      = { tier: null, plan: null };
+var state    = { readConfirmed: false, payConfirmed: false, mediaConsent: false };
+var prefilled = { tier: false, plan: false };
+
+var tierPrices = { Launch: 1500, Build: 2200, Lead: 3000 };
+var tierMonths = { Launch: 3,    Build: 4,    Lead: 5    };
+var tierIncludes = {
+  Launch: ['✓ 4 sesiones 1-a-1 semanales por Zoom, 60 min / 4 live 1-on-1 Zoom sessions/week, 60 min','✓ Personalized objectives & roadmap / Objetivos personalizados y hoja de ruta','✓ Acceso a The Fluency Library / The Fluency Library access','✓ Check-in semanal y registro de avance / Weekly self-eval & growth log','✓ Milestones especializados / Custom milestones'],
+  Build:  ['✓ Todo lo de Launch / Everything in Launch','✓ Roleplay de escenarios avanzados / Advanced scenario roleplay','✓ Coaching de comunicación para líderes / Leadership Communication Coaching'],
+  Lead:   ['✓ Todo lo de Build / Everything in Build','✓ Coaching de vocabulario por industria / Industry Vocabulary Coaching','✓ Módulos de inglés de negocios: negociaciones y presentaciones / Business English: negotiations & presentations','✓ Reporte mensual de progreso / Monthly progress report']
+};
+
+// ── ACCESS GATE ──
+function checkCode() {
+  var val = document.getElementById('gateInput').value.trim().toLowerCase();
+  if (val === ACCESS_CODE) {
+    document.getElementById('gateWrap').style.display = 'none';
+    document.getElementById('mainContract').style.display = 'block';
+    applyPrefill();
+  } else {
+    document.getElementById('gateError').style.display = 'block';
+    document.getElementById('gateInput').style.borderColor = 'var(--error)';
+    setTimeout(function(){
+      document.getElementById('gateInput').style.borderColor = '';
+    }, 2000);
+  }
+}
+
+// ── URL PARAMS (hash-based) ──
+function getParam(name) {
+  var hash = window.location.hash.substring(1);
+  var params = {};
+  hash.split('&').forEach(function(item) {
+    var parts = item.split('=');
+    if (parts[0]) params[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1] || '');
+  });
+  return params[name] || '';
+}
+
+function applyPrefill() {
+  var name = getParam('name');
+  var tier = getParam('tier');
+  var plan = getParam('plan');
+
+  if (name) {
+    var parts = name.trim().split(' ');
+    document.getElementById('firstName').value = parts[0] || '';
+    document.getElementById('lastName1').value = parts[1] || '';
+    document.getElementById('lastName2').value = parts[2] || '';
+  }
+  if (tier && tierPrices[tier]) {
+    selectTier(tier);
+    document.querySelectorAll('.tier-card').forEach(function(c){ c.classList.add('locked'); c.onclick = null; });
+    document.getElementById('tierNote').style.display = 'block';
+    prefilled.tier = true;
+  }
+  if (plan && ['full','split','monthly'].indexOf(plan) !== -1) {
+    selectPlan(plan);
+    document.querySelectorAll('.plan-card').forEach(function(c){ c.classList.add('locked'); c.onclick = null; });
+    document.getElementById('planNote').style.display = 'block';
+    prefilled.plan = true;
+  }
+}
+
+// ── TIER ──
+function selectTier(t) {
+  document.querySelectorAll('.tier-card').forEach(function(c){ c.classList.remove('selected'); });
+  var card = document.getElementById('tier-' + t);
+  if (card) card.classList.add('selected');
+  sel.tier = t;
+  var detail = document.getElementById('tierDetail');
+  detail.style.display = 'block';
+  document.getElementById('tierIncludes').innerHTML = tierIncludes[t].map(function(l){ return '<div style="padding:2px 0;font-size:15px">'+l+'</div>'; }).join('');
+  if (sel.plan) buildPaymentSummary();
+}
+
+// ── PLAN ──
+function selectPlan(p) {
+  document.querySelectorAll('.plan-card').forEach(function(c){ c.classList.remove('selected'); });
+  var card = document.getElementById('plan-' + p);
+  if (card) card.classList.add('selected');
+  sel.plan = p;
+  document.getElementById('err-plan').style.display = 'none';
+  if (sel.tier) buildPaymentSummary();
+}
+
+// ── PAYMENT SUMMARY ──
+function buildPaymentSummary() {
+  if (!sel.tier || !sel.plan) return;
+  var price  = tierPrices[sel.tier];
+  var months = tierMonths[sel.tier];
+  var rows   = [];
+  var total  = price;
+  var discountHtml = '';
+
+  if (sel.plan === 'full') {
+    var disc = Math.round(price * 0.95);
+    total = disc;
+    rows.push({ label: 'Pago completo / Full payment', amount: disc });
+    discountHtml = '<span class="discount-badge">5% descuento · discount applied</span>';
+  } else if (sel.plan === 'split') {
+    var h1 = Math.round(price / 2); var h2 = price - h1;
+    rows.push({ label: 'Primera cuota / First installment', amount: h1 });
+    rows.push({ label: 'Segunda cuota / Second installment', amount: h2 });
+  } else {
+    var mo = Math.round(price / months);
+    for (var i = 0; i < months; i++) {
+      var amt = (i === months-1) ? price - mo*(months-1) : mo;
+      rows.push({ label: 'Mes '+(i+1)+' / Month '+(i+1), amount: amt });
+    }
+  }
+
+  var rowsHtml = rows.map(function(r){
+    return '<div class="payment-row"><span class="p-label">'+r.label+'</span><span class="p-amount">$'+r.amount.toLocaleString('en-US',{minimumFractionDigits:2})+'</span></div>';
+  }).join('');
+
+  document.getElementById('paymentSummaryWrap').innerHTML =
+    '<div class="payment-summary" style="margin-top:1.25rem;">'+
+      '<div class="payment-summary-header"><span>Detalle de pagos · Payment breakdown</span><span>'+sel.tier+' · '+tierMonths[sel.tier]*4+' semanas</span></div>'+
+      rowsHtml+
+      '<div class="payment-total"><div><div class="t-label">Total del programa · Program total '+discountHtml+'</div></div><div class="t-amount">$'+total.toLocaleString('en-US',{minimumFractionDigits:2})+'</div></div>'+
+    '</div>';
+}
+
+// ── CONTRACT TEXT ──
+function buildContract() {
+  var fn   = document.getElementById('firstName').value.trim();
+  var ln1  = document.getElementById('lastName1').value.trim();
+  var ln2  = document.getElementById('lastName2').value.trim();
+  var name = [fn,ln1,ln2].filter(Boolean).join(' ');
+  var t    = sel.tier || '';
+  var weeks = t ? tierMonths[t]*4 + ' semanas' : '';
+  var price = t ? '$' + tierPrices[t].toLocaleString('en-US',{minimumFractionDigits:2}) : '';
+
+  var clauses = [
+    { title:'1. Partes · Parties', es:'Este Acuerdo es celebrado entre Sena Carlson, bajo el nombre comercial Fluent with Sena ("Coach"), y '+name+' ("Cliente").', en:'This Coaching Agreement is entered into between Sena Carlson, operating as Fluent with Sena ("Coach"), and '+name+' ("Client").'},
+    { title:'2. Servicios incluidos · Scope of services — '+t+' ('+weeks+')', es:'El programa incluye 4 sesiones semanales 1-a-1 por Zoom (60 min cada una), objetivos personalizados y hoja de ruta, acceso a The Fluency Library, check-in semanal con registro de avance, y milestones especializados. No incluye: preparación para exámenes, edición de documentos, traducción, sesiones grupales ni coaching post-programa.', en:'Program includes 4 live 1-on-1 Zoom sessions/week (60 min each), personalized objectives and roadmap, access to The Fluency Library, weekly self-eval and growth log, and custom milestones. Not included: exam prep, document editing, translation, group sessions, or post-program coaching.'},
+    { title:'3. Pago · Payment — '+price, es:'Los términos de pago corresponden al plan seleccionado y confirmado por el Cliente en este mismo acuerdo. Cada cuota vence en la fecha acordada con la Coach. Si un pago tiene más de 5 días de retraso, las sesiones se pausan —no se cancelan— hasta que se regularice el saldo. Métodos aceptados: Link, tarjetas de crédito, y transferencias bancarias.', en:'Payment terms correspond to the plan selected and confirmed by Client in this agreement. Each installment is due on the date agreed with Coach. Sessions will be paused — not cancelled — if payment is more than 5 days overdue. Accepted: Link, all major credit cards, and bank transfers.'},
+    { title:'4. Cancelaciones y ausencias · Cancellation & no-show policy', es:'Las cancelaciones con 24 horas o más de anticipación pueden reprogramarse sin cargo. Las cancelaciones con menos de 24 horas o las ausencias se consideran sesiones utilizadas y no son reembolsables. Máximo 2 reprogramaciones por mes. Tres o más ausencias en 30 días pueden dar lugar a la terminación del programa.', en:'Cancellations with 24+ hours notice may be rescheduled at no charge. Cancellations under 24 hours or no-shows are considered used sessions and are non-refundable. Maximum 2 reschedules per month. Three or more no-shows in 30 days may trigger program termination.'},
+    { title:'5. Política de reembolsos · Refund policy', es:'Antes de la Sesión 1: reembolso total. Desde la Sesión 1 hasta el final de la Semana 3: reembolso proporcional por sesiones no realizadas, menos un cargo administrativo del 15%. A partir de la Semana 4: sin reembolso, independientemente de la razón.', en:'Before Session 1: full refund. From Session 1 through the end of Week 3: prorated refund for undelivered sessions, minus a 15% administrative fee. From Week 4 onward: no refund, regardless of reason for termination.'},
+    { title:'6. Terminación · Termination', es:'El Cliente puede terminar con aviso escrito; los reembolsos se rigen por la Sección 5. La Coach puede terminar con 7 días de aviso por escrito por ausencias repetidas, falta de pago o conducta irrespetuosa. Si la Coach termina por causa (incumplimiento del Cliente), no se deben reembolsos por sesiones no realizadas. Si la Coach termina sin causa, se emite un reembolso proporcional.', en:'Client may terminate with written notice; refunds per Section 5. Coach may terminate with 7 days written notice for repeated no-shows, non-payment, or disrespectful conduct. If Coach terminates for cause (Client breach), no refund is owed for undelivered sessions. If Coach terminates without cause, a prorated refund for undelivered sessions will be issued.'},
+    { title:'7. Confidencialidad · Confidentiality', es:'La Coach no compartirá información del Cliente con terceros sin consentimiento escrito. El Cliente no puede distribuir los materiales de la Coach fuera de su uso personal. Los testimonios requieren consentimiento escrito explícito del Cliente.', en:"Coach will not share Client's information with third parties without written consent. Client may not distribute Coach's materials outside personal use. Testimonials require explicit written consent from Client."},
+    { title:'8. Uso de imagen y medios · Media & likeness', es:'Si el Cliente otorgó permiso de imagen en la sección de firma, autoriza a Fluent with Sena a usar su nombre, inicial de apellido, imagen y materiales visuales en los que aparezca con fines de marketing y comunicación pública. Este permiso puede revocarse en cualquier momento mediante aviso escrito; los materiales ya publicados pueden permanecer.', en:'If Client granted media permission at the signature step, Client authorizes Fluent with Sena to use their first name, last initial, likeness, and visual materials in which they appear for marketing and public communications. This permission may be revoked at any time with written notice; materials already published may remain.'},
+    { title:'9. Sin garantía de resultados · No results guarantee', es:'El coaching es una asociación activa. Los resultados dependen del esfuerzo, la constancia y la práctica del Cliente fuera de las sesiones. No se garantiza ningún nivel específico de fluidez, resultado profesional ni plazo determinado. La Coach se compromete a llegar preparada y con atención profesional genuina en cada sesión.', en:"Coaching is an active partnership. Results depend on Client's effort, consistency, and outside practice. No specific fluency level, career outcome, or timeline is guaranteed. Coach commits to full preparation and genuine professional care at every session."},
+    { title:'10. Propiedad intelectual · Intellectual property', es:'Todos los materiales, marcos de trabajo, biblioteca de contenido, plantillas y metodologías son propiedad exclusiva de Sena Carlson / Fluent with Sena. El Cliente recibe una licencia de uso personal durante el programa solamente. Los materiales no pueden compartirse, reproducirse ni usarse para crear productos competidores.', en:'All materials, frameworks, content library resources, tracker templates, and methodologies are the exclusive property of Sena Carlson / Fluent with Sena. Client receives a personal-use license during the program only. Materials may not be shared, reproduced, or used to create competing products.'},
+    { title:'11. Ley aplicable · Governing law', es:'Este Acuerdo se rige por la ley de los Estados Unidos. Las disputas se resolverán primero mediante negociación de buena fe y, de no resolverse, mediante arbitraje vinculante bajo las reglas de la AAA. La versión en inglés es la legalmente vinculante.', en:'This Agreement is governed by US law. Disputes will first be addressed through good-faith negotiation, then binding arbitration under AAA rules. The English version is the legally binding version.'}
+  ];
+
+  document.getElementById('contractText').innerHTML = clauses.map(function(c){
+    return '<div class="clause">'+
+      '<div class="clause-title">'+c.title+'</div>'+
+      '<div class="lang-block"><div class="lang-tag es">Español</div><div class="lang-text-es">'+c.es+'</div></div>'+
+      '<div class="lang-block" style="margin-top:6px"><div class="lang-tag en">English</div><div class="lang-text-en">'+c.en+'</div></div>'+
+      '</div>';
+  }).join('');
+}
+
+// ── TOGGLE ──
+function toggleCheck(rowId, boxId, key) {
+  state[key] = !state[key];
+  document.getElementById(boxId).classList.toggle('checked', state[key]);
+  document.getElementById(rowId).classList.toggle('checked', state[key]);
+}
+
+// ── STEP BAR ──
+function setStep(n) {
+  for (var i = 1; i <= 6; i++) {
+    var dot = document.getElementById('dot'+i);
+    var lbl = document.getElementById('lbl'+i);
+    dot.classList.remove('active','done');
+    lbl.classList.remove('active');
+    if (i < n) { dot.classList.add('done'); dot.textContent = '✓'; }
+    else if (i === n) { dot.classList.add('active'); dot.textContent = i < 6 ? String(i) : '✓'; lbl.classList.add('active'); }
+    else { dot.textContent = i < 6 ? String(i) : '✓'; }
+    if (i <= 5) { var line = document.getElementById('line'+i); if (line) line.classList.toggle('done', i < n); }
+  }
+}
+
+// ── NAVIGATION ──
+function goTo(n) {
+  if (n === 2) {
+    var ok = true;
+    ['firstName','lastName1'].forEach(function(id){ var v = document.getElementById(id).value.trim(); document.getElementById('err-'+id).style.display = v?'none':'block'; if(!v) ok=false; });
+    var em = document.getElementById('email').value.trim();
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);
+    document.getElementById('err-email').style.display = emailOk?'none':'block';
+    if (!emailOk) ok = false;
+    if (!ok) return;
+  }
+  if (n === 3) {
+    if (!sel.tier) { document.getElementById('err-tier').style.display = 'block'; return; }
+    document.getElementById('err-tier').style.display = 'none';
+    buildContract();
+  }
+  if (n === 4) {
+    if (!state.readConfirmed) { document.getElementById('err-read').style.display = 'block'; return; }
+    document.getElementById('err-read').style.display = 'none';
+    if (sel.plan) buildPaymentSummary();
+  }
+  if (n === 5) {
+    if (!sel.plan) { document.getElementById('err-plan').style.display = 'block'; return; }
+    document.getElementById('err-plan').style.display = 'none';
+    if (!state.payConfirmed) { document.getElementById('err-pay').style.display = 'block'; return; }
+    document.getElementById('err-pay').style.display = 'none';
+    var d = new Date().toLocaleDateString('es-MX',{day:'numeric',month:'long',year:'numeric'});
+    document.getElementById('sigDate').textContent = d;
+  }
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('page'+n).classList.add('active');
+  setStep(n);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── SIGN + MAKE WEBHOOK ──
+function signContract() {
+  var sig = document.getElementById('sigClient').value.trim();
+  if (!sig) { document.getElementById('err-sig').style.display = 'block'; return; }
+  document.getElementById('err-sig').style.display = 'none';
+
+  var email    = document.getElementById('email').value.trim();
+  var fn       = document.getElementById('firstName').value.trim();
+  var ln       = [document.getElementById('lastName1').value.trim(), document.getElementById('lastName2').value.trim()].filter(Boolean).join(' ');
+  var phone    = document.getElementById('phone').value.trim();
+  var price    = tierPrices[sel.tier];
+  var total    = sel.plan === 'full' ? Math.round(price*0.95) : price;
+  var planLabels = { full:'Pago completo / Full pay (5% off)', split:'Dos cuotas / Two installments', monthly:'Mensual / Monthly' };
+  var mediaVal = state.mediaConsent ? 'Yes' : 'No';
+  var dateStr  = new Date().toLocaleDateString('es-MX',{day:'numeric',month:'long',year:'numeric'});
+  var dateISO  = new Date().toISOString();
+
+  var payload = {
+    submitted_at:    dateISO,
+    client_name:     fn + ' ' + ln,
+    client_email:    email,
+    client_whatsapp: phone,
+    program:         sel.tier,
+    duration_weeks:  tierMonths[sel.tier] * 4,
+    payment_plan:    planLabels[sel.plan],
+    total_amount:    '$' + total.toLocaleString('en-US',{minimumFractionDigits:2}),
+    media_consent:   mediaVal,
+    signature:       sig,
+    signed_date:     dateStr
+  };
+
+  var btn = document.getElementById('submitBtn');
+  btn.textContent = 'Enviando... / Sending...';
+  btn.disabled = true;
+
+  fetch(MAKE_WEBHOOK, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(function() { showSuccess(fn, ln, email, sig, planLabels, total, mediaVal, dateStr); })
+  .catch(function() { showSuccess(fn, ln, email, sig, planLabels, total, mediaVal, dateStr); });
+}
+
+function showSuccess(fn, ln, email, sig, planLabels, total, mediaVal, dateStr) {
+  document.getElementById('successEmail').textContent  = email;
+  document.getElementById('successEmail2').textContent = email;
+
+  function srow(k,v){ return '<div class="summary-row"><span class="summary-key">'+k+'</span><span class="summary-val">'+v+'</span></div>'; }
+  document.getElementById('signedSummary').innerHTML =
+    srow('Cliente', fn+' '+ln) +
+    srow('Programa', sel.tier+' · '+tierMonths[sel.tier]*4+' semanas') +
+    srow('Plan de pagos', planLabels[sel.plan]) +
+    srow('Total', '$'+(sel.plan==='full'?Math.round(tierPrices[sel.tier]*0.95):tierPrices[sel.tier]).toLocaleString('en-US',{minimumFractionDigits:2})) +
+    srow('Permiso de imagen', mediaVal) +
+    '<div class="summary-row"><span class="summary-key">Firma</span><span class="summary-val sig-font">'+sig+'</span></div>' +
+    srow('Fecha', dateStr);
+
+  goTo(6);
+}
+</script>
+</body>
+</html>
