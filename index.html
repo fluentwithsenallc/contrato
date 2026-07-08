@@ -614,33 +614,44 @@ function selectPlan(p) {
 }
 
 // ── PAYMENT SUMMARY ──
+function formatDueDate(d) {
+  return d.toLocaleDateString('es-MX', { day:'numeric', month:'short', year:'numeric' });
+}
+
 function buildPaymentSummary() {
   if (!sel.tier || !sel.plan) return;
   var price  = tierPrices[sel.tier];
+  var weeks  = tierMonths[sel.tier] * 4;
   var months = tierMonths[sel.tier];
   var rows   = [];
   var total  = price;
   var discountHtml = '';
+  var today  = new Date();
 
   if (sel.plan === 'full') {
     var disc = Math.round(price * 0.95);
     total = disc;
-    rows.push({ label: 'Pago completo / Full payment', amount: disc });
+    rows.push({ label: 'Pago completo / Full payment', date: formatDueDate(today), amount: disc });
     discountHtml = '<span class="discount-badge">5% descuento · discount applied</span>';
   } else if (sel.plan === 'split') {
     var h1 = Math.round(price / 2); var h2 = price - h1;
-    rows.push({ label: 'Primera cuota / First installment', amount: h1 });
-    rows.push({ label: 'Segunda cuota / Second installment', amount: h2 });
+    var midWeeks = Math.round(weeks / 2);
+    var secondDate = new Date(today);
+    secondDate.setDate(secondDate.getDate() + midWeeks * 7);
+    rows.push({ label: 'Primera cuota / First installment', date: formatDueDate(today), amount: h1 });
+    rows.push({ label: 'Segunda cuota / Second installment', date: formatDueDate(secondDate), amount: h2 });
   } else {
     var mo = Math.round(price / months);
     for (var i = 0; i < months; i++) {
       var amt = (i === months-1) ? price - mo*(months-1) : mo;
-      rows.push({ label: 'Mes '+(i+1)+' / Month '+(i+1), amount: amt });
+      var dueDate = new Date(today);
+      dueDate.setMonth(dueDate.getMonth() + i);
+      rows.push({ label: 'Mes '+(i+1)+' / Month '+(i+1), date: formatDueDate(dueDate), amount: amt });
     }
   }
 
   var rowsHtml = rows.map(function(r){
-    return '<div class="payment-row"><span class="p-label">'+r.label+'</span><span class="p-amount">$'+r.amount.toLocaleString('en-US',{minimumFractionDigits:2})+'</span></div>';
+    return '<div class="payment-row"><span class="p-label">'+r.label+'<br><span style="font-size:12px;color:rgba(255,255,255,0.65);font-weight:400;">Vence · Due: '+r.date+'</span></span><span class="p-amount">$'+r.amount.toLocaleString('en-US',{minimumFractionDigits:2})+'</span></div>';
   }).join('');
 
   document.getElementById('paymentSummaryWrap').innerHTML =
@@ -664,7 +675,7 @@ function buildContract() {
   var clauses = [
     { title:'1. Partes · Parties', es:'Este Acuerdo es celebrado entre Sena Carlson, bajo el nombre comercial Fluent with Sena ("Coach"), y '+name+' ("Cliente").', en:'This Coaching Agreement is entered into between Sena Carlson, operating as Fluent with Sena ("Coach"), and '+name+' ("Client").'},
     { title:'2. Servicios incluidos · Scope of services — '+t+' ('+weeks+')', es:'El programa incluye hasta 4 sesiones semanales 1-a-1 por Zoom (60 min cada una), objetivos personalizados y hoja de ruta, acceso a The Fluency Library, check-in semanal con registro de avance, y logros especializados. El precio se mantiene igual: es una tarifa mensual fija, independientemente de la cantidad de sesiones a las que asista el Cliente. No incluye: preparación para exámenes, edición de documentos, traducción, sesiones grupales ni coaching post-programa.', en:"Program includes up to 4 live 1-on-1 Zoom sessions/week (60 min each), personalized objectives and roadmap, access to The Fluency Library, weekly self-eval and growth log, and custom achievements. Price remains the same: this is a fixed monthly rate, regardless of how many sessions the Client attends. Not included: exam prep, document editing, translation, group sessions, or post-program coaching."},
-    { title:'3. Pago · Payment — '+price, es:'Los términos de pago corresponden al plan seleccionado y confirmado por el Cliente en este mismo acuerdo. Cada cuota vence en la fecha acordada con la Coach. Si un pago tiene más de 5 días de retraso, las sesiones se pausan —no se cancelan— hasta que se regularice el saldo. Métodos aceptados: Link, tarjetas de crédito, y transferencias bancarias.', en:'Payment terms correspond to the plan selected and confirmed by Client in this agreement. Each installment is due on the date agreed with Coach. Sessions will be paused — not cancelled — if payment is more than 5 days overdue. Accepted: Link, all major credit cards, and bank transfers.'},
+    { title:'3. Pago · Payment — '+price, es:'El primer pago vence el mismo día de la firma de este acuerdo. Los pagos siguientes corresponden a las fechas mostradas en el plan de pagos seleccionado y confirmado por el Cliente en este mismo acuerdo. Si un pago tiene más de 5 días de retraso, las sesiones se pausan —no se cancelan— hasta que se regularice el saldo. Métodos aceptados: Link, tarjetas de crédito, y transferencias bancarias.', en:'The first payment is due on the date this agreement is signed. Subsequent payments are due on the dates shown in the payment plan selected and confirmed by Client in this agreement. Sessions will be paused — not cancelled — if payment is more than 5 days overdue. Accepted: Link, all major credit cards, and bank transfers.'},
     { title:'4. Cancelaciones y ausencias · Cancellation & no-show policy', es:'Las cancelaciones con 24 horas o más de anticipación pueden reprogramarse sin cargo. Las cancelaciones con menos de 24 horas o las ausencias se consideran sesiones utilizadas y no son reembolsables. Máximo 2 reprogramaciones por mes. Tres o más ausencias en 30 días pueden dar lugar a la terminación del programa.', en:'Cancellations with 24+ hours notice may be rescheduled at no charge. Cancellations under 24 hours or no-shows are considered used sessions and are non-refundable. Maximum 2 reschedules per month. Three or more no-shows in 30 days may trigger program termination.'},
     { title:'5. Política de reembolsos · Refund policy', es:'Antes de la Sesión 1: reembolso total. Desde la Sesión 1 hasta el final de la Semana 3: reembolso proporcional por sesiones no realizadas, menos un cargo administrativo del 15%. A partir de la Semana 4: sin reembolso, independientemente de la razón.', en:'Before Session 1: full refund. From Session 1 through the end of Week 3: prorated refund for undelivered sessions, minus a 15% administrative fee. From Week 4 onward: no refund, regardless of reason for termination.'},
     { title:'6. Terminación · Termination', es:'El Cliente puede terminar con aviso escrito; los reembolsos se rigen por la Sección 5. La Coach puede terminar con 7 días de aviso por escrito por ausencias repetidas, falta de pago o conducta irrespetuosa. Si la Coach termina por causa (incumplimiento del Cliente), no se deben reembolsos por sesiones no realizadas. Si la Coach termina sin causa, se emite un reembolso proporcional.', en:'Client may terminate with written notice; refunds per Section 5. Coach may terminate with 7 days written notice for repeated no-shows, non-payment, or disrespectful conduct. If Coach terminates for cause (Client breach), no refund is owed for undelivered sessions. If Coach terminates without cause, a prorated refund for undelivered sessions will be issued.'},
