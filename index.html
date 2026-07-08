@@ -11,7 +11,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --navy: #0b1220; --navy-card: #0f1a2e; --navy-surface: #132035;
-  --navy-deep: #070d18; --white: #f4f1ec; --white-pure: #ffffff;
+  --navy-deep: #070d18; --white: #ffffff; --white-pure: #ffffff;
   --border: rgba(244,241,236,0.25); --border-soft: rgba(255,255,255,0.1);
   --muted: #ffffff; --error: #e8856a;
 }
@@ -27,49 +27,6 @@ body::before {
   pointer-events: none; z-index: 0; opacity: 0.4;
 }
 .outer { position: relative; z-index: 1; max-width: 850px; margin: 0 auto; }
-
-/* ACCESS GATE */
-.gate {
-  min-height: 100vh; display: flex; align-items: center; justify-content: center;
-  padding: 2rem 1rem;
-}
-.gate-card {
-  background: var(--navy-card); border: 1px solid var(--border);
-  border-radius: 20px; padding: 3rem 2.5rem; max-width: 420px; width: 100%;
-  text-align: center; position: relative; overflow: hidden;
-}
-.gate-card::before {
-  content: ''; position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
-  width: 300px; height: 160px;
-  background: radial-gradient(ellipse, rgba(255,255,255,0.08) 0%, transparent 70%);
-  pointer-events: none;
-}
-.gate-brand { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--white-pure); font-weight: 600; margin-bottom: 16px; }
-.gate-title { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--white-pure); margin-bottom: 8px; }
-.gate-sub { font-size: 14px; color: rgba(255,255,255,0.65); margin-bottom: 2rem; line-height: 1.6; }
-.gate-input {
-  background: var(--navy-surface); border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 10px; padding: 14px 16px; color: var(--white-pure);
-  font-size: 16px; font-family: 'DM Sans', sans-serif;
-  outline: none; width: 100%; margin-bottom: 12px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  text-align: center; letter-spacing: 0.08em;
-}
-.gate-input:focus { border-color: var(--white); box-shadow: 0 0 0 3px rgba(255,255,255,0.1); }
-.gate-input::placeholder { color: rgba(255,255,255,0.3); letter-spacing: 0.04em; }
-.gate-btn {
-  display: block; width: 100%; padding: 15px;
-  background: var(--white); color: #0a1120;
-  font-size: 13px; font-weight: 700; font-family: 'DM Sans', sans-serif;
-  border: none; border-radius: 12px; cursor: pointer;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  transition: opacity 0.2s; margin-bottom: 12px;
-}
-.gate-btn:hover { opacity: 0.86; }
-.gate-error {
-  font-size: 13px; color: var(--error); display: none; margin-top: 8px;
-}
-.gate-hint { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 12px; }
 
 /* HEADER */
 .header {
@@ -343,32 +300,18 @@ input::placeholder { color: rgba(255,255,255,0.35); }
   .field-row, .tier-grid, .plan-grid, .sig-row { grid-template-columns: 1fr; }
   .step-bar { padding: 0.9rem 0.5rem; }
   .step-label { font-size: 10px; }
-  .gate-card { padding: 2rem 1.5rem; }
 }
 </style>
 </head>
 <body>
 
-<!-- ── ACCESS GATE ── -->
-<div class="gate" id="gateWrap">
-  <div class="gate-card">
-    <div class="gate-brand">Fluent with Sena</div>
-    <div class="gate-title">Client Portal</div>
-    <div class="gate-sub">Ingresa tu código de acceso para continuar.<br>Enter your access code to continue.</div>
-    <input type="password" class="gate-input" id="gateInput" placeholder="Código de acceso" onkeydown="if(event.key==='Enter')checkCode()">
-    <button class="gate-btn" onclick="checkCode()">Continuar / Continue →</button>
-    <div class="gate-error" id="gateError">Código incorrecto. Verifica con Sena. / Incorrect code. Check with Sena.</div>
-    <div class="gate-hint">¿No tienes un código? Escríbele a Sena.<br>Don't have a code? Message Sena.</div>
-  </div>
-</div>
-
-<!-- ── MAIN CONTRACT (hidden until code entered) ── -->
-<div class="outer" id="mainContract" style="display:none;">
+<!-- ── MAIN CONTRACT ── -->
+<div class="outer" id="mainContract">
 
   <div class="header">
     <div class="header-brand">Fluent with Sena</div>
     <div class="header-title">Client Coaching Agreement</div>
-    <div class="header-title-es">Acuerdo de Coaching para Clientes</div>
+    <div class="header-title-es">Acuerdo de coaching para clientes</div>
     <div class="header-contact">sena@fluentwithsena.com &nbsp;·&nbsp; fluentwithsena.com</div>
     <div class="header-rule"></div>
   </div>
@@ -381,7 +324,7 @@ input::placeholder { color: rgba(255,255,255,0.35); }
     <div class="step"><div class="step-dot" id="dot3">3</div><div class="step-label" id="lbl3">Acuerdo</div></div>
     <div class="step-line" id="line3"></div>
     <div class="step"><div class="step-dot" id="dot4">4</div><div class="step-label" id="lbl4">Pagos</div></div>
-    <div class="step-line" id="line4"></div>
+    <div class="step-line" id="line5"></div>
     <div class="step"><div class="step-dot" id="dot5">5</div><div class="step-label" id="lbl5">Firma</div></div>
     <div class="step-line" id="line5"></div>
     <div class="step"><div class="step-dot" id="dot6">✓</div><div class="step-label" id="lbl6">Listo</div></div>
@@ -436,12 +379,12 @@ input::placeholder { color: rgba(255,255,255,0.35); }
           <div class="tier-popular">Popular</div>
           <div class="tier-name">Build</div>
           <div class="tier-weeks">16 semanas</div>
-          <div class="tier-price">$2,200</div>
+          <div class="tier-price">$2,500</div>
         </div>
         <div class="tier-card" id="tier-Lead" onclick="selectTier('Lead')">
           <div class="tier-name">Lead</div>
           <div class="tier-weeks">20 semanas</div>
-          <div class="tier-price">$3,000</div>
+          <div class="tier-price">$4,000</div>
         </div>
       </div>
       <div class="error-msg" id="err-tier" style="display:none;margin-top:12px;">Selecciona un programa / Please select a program</div>
@@ -567,18 +510,6 @@ input::placeholder { color: rgba(255,255,255,0.35); }
         </div>
       </div>
     </div>
-    <div class="panel">
-      <div class="panel-title">Pago · Payment</div>
-      <div class="info-box">
-        <div class="info-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        </div>
-        <div>
-          <div class="info-es">Sena te enviará el enlace de pago a tu correo en las próximas horas. Métodos aceptados: <strong>Link · Tarjetas de crédito · Transferencias bancarias</strong>.</div>
-          <div class="info-en">Sena will send your payment link via email within a few hours. Accepted: <strong>Link · All major credit cards · Bank transfers</strong>.</div>
-        </div>
-      </div>
-    </div>
     <button class="btn-primary" id="submitBtn" onclick="signContract()">Firmar y enviar / Sign & submit ✦</button>
     <button class="btn-back" onclick="goTo(4)">← Volver / Back</button>
   </div>
@@ -602,7 +533,7 @@ input::placeholder { color: rgba(255,255,255,0.35); }
           <strong style="color:#ffffff;">Once your first payment is confirmed, your Fluency Hub will unlock.</strong>
         </div>
         <div class="signed-summary" id="signedSummary"></div>
-        <div class="contact-footer">¿Preguntas? / Questions? &nbsp;<a href="mailto:sena@fluentwithsena.com">sena@fluentwithsena.com</a></div>
+        <div class="contact-footer">¿Preguntas? / Questions? &nbsp;<a href="https://wa.me/12079753006">WhatsApp +1 (207) 975-3006</a> &nbsp;·&nbsp; <a href="mailto:sena@fluentwithsena.com">sena@fluentwithsena.com</a></div>
       </div>
     </div>
   </div>
@@ -611,35 +542,18 @@ input::placeholder { color: rgba(255,255,255,0.35); }
 
 <script>
 var MAKE_WEBHOOK = 'https://hook.us2.make.com/07ji5swhajrdnaa245flawp4jdspp587';
-var ACCESS_CODE  = 'fluent2026';
 
 var sel      = { tier: null, plan: null };
 var state    = { readConfirmed: false, payConfirmed: false, mediaConsent: false };
 var prefilled = { tier: false, plan: false };
 
-var tierPrices = { Launch: 1500, Build: 2200, Lead: 3000 };
+var tierPrices = { Launch: 1500, Build: 2500, Lead: 4000 };
 var tierMonths = { Launch: 3,    Build: 4,    Lead: 5    };
 var tierIncludes = {
-  Launch: ['✓ 4 sesiones 1-a-1 semanales por Zoom, 60 min / 4 live 1-on-1 Zoom sessions/week, 60 min','✓ Personalized objectives & roadmap / Objetivos personalizados y hoja de ruta','✓ Acceso a The Fluency Library / The Fluency Library access','✓ Check-in semanal y registro de avance / Weekly self-eval & growth log','✓ Milestones especializados / Custom milestones'],
+  Launch: ['✓ Hasta 4 sesiones 1-a-1 semanales por Zoom, 60 min / Up to 4 live 1-on-1 Zoom sessions/week, 60 min','✓ Objetivos personalizados y hoja de ruta / Personalized objectives & roadmap','✓ Acceso a The Fluency Library / The Fluency Library access','✓ Check-in semanal y registro de avance / Weekly self-eval & growth log','✓ Logros especializados / Custom achievements'],
   Build:  ['✓ Todo lo de Launch / Everything in Launch','✓ Roleplay de escenarios avanzados / Advanced scenario roleplay','✓ Coaching de comunicación para líderes / Leadership Communication Coaching'],
   Lead:   ['✓ Todo lo de Build / Everything in Build','✓ Coaching de vocabulario por industria / Industry Vocabulary Coaching','✓ Módulos de inglés de negocios: negociaciones y presentaciones / Business English: negotiations & presentations','✓ Reporte mensual de progreso / Monthly progress report']
 };
-
-// ── ACCESS GATE ──
-function checkCode() {
-  var val = document.getElementById('gateInput').value.trim().toLowerCase();
-  if (val === ACCESS_CODE) {
-    document.getElementById('gateWrap').style.display = 'none';
-    document.getElementById('mainContract').style.display = 'block';
-    applyPrefill();
-  } else {
-    document.getElementById('gateError').style.display = 'block';
-    document.getElementById('gateInput').style.borderColor = 'var(--error)';
-    setTimeout(function(){
-      document.getElementById('gateInput').style.borderColor = '';
-    }, 2000);
-  }
-}
 
 // ── URL PARAMS (hash-based) ──
 function getParam(name) {
@@ -749,7 +663,7 @@ function buildContract() {
 
   var clauses = [
     { title:'1. Partes · Parties', es:'Este Acuerdo es celebrado entre Sena Carlson, bajo el nombre comercial Fluent with Sena ("Coach"), y '+name+' ("Cliente").', en:'This Coaching Agreement is entered into between Sena Carlson, operating as Fluent with Sena ("Coach"), and '+name+' ("Client").'},
-    { title:'2. Servicios incluidos · Scope of services — '+t+' ('+weeks+')', es:'El programa incluye 4 sesiones semanales 1-a-1 por Zoom (60 min cada una), objetivos personalizados y hoja de ruta, acceso a The Fluency Library, check-in semanal con registro de avance, y milestones especializados. No incluye: preparación para exámenes, edición de documentos, traducción, sesiones grupales ni coaching post-programa.', en:'Program includes 4 live 1-on-1 Zoom sessions/week (60 min each), personalized objectives and roadmap, access to The Fluency Library, weekly self-eval and growth log, and custom milestones. Not included: exam prep, document editing, translation, group sessions, or post-program coaching.'},
+    { title:'2. Servicios incluidos · Scope of services — '+t+' ('+weeks+')', es:'El programa incluye hasta 4 sesiones semanales 1-a-1 por Zoom (60 min cada una), objetivos personalizados y hoja de ruta, acceso a The Fluency Library, check-in semanal con registro de avance, y logros especializados. El precio se mantiene igual: es una tarifa mensual fija, independientemente de la cantidad de sesiones a las que asista el Cliente. No incluye: preparación para exámenes, edición de documentos, traducción, sesiones grupales ni coaching post-programa.', en:"Program includes up to 4 live 1-on-1 Zoom sessions/week (60 min each), personalized objectives and roadmap, access to The Fluency Library, weekly self-eval and growth log, and custom achievements. Price remains the same: this is a fixed monthly rate, regardless of how many sessions the Client attends. Not included: exam prep, document editing, translation, group sessions, or post-program coaching."},
     { title:'3. Pago · Payment — '+price, es:'Los términos de pago corresponden al plan seleccionado y confirmado por el Cliente en este mismo acuerdo. Cada cuota vence en la fecha acordada con la Coach. Si un pago tiene más de 5 días de retraso, las sesiones se pausan —no se cancelan— hasta que se regularice el saldo. Métodos aceptados: Link, tarjetas de crédito, y transferencias bancarias.', en:'Payment terms correspond to the plan selected and confirmed by Client in this agreement. Each installment is due on the date agreed with Coach. Sessions will be paused — not cancelled — if payment is more than 5 days overdue. Accepted: Link, all major credit cards, and bank transfers.'},
     { title:'4. Cancelaciones y ausencias · Cancellation & no-show policy', es:'Las cancelaciones con 24 horas o más de anticipación pueden reprogramarse sin cargo. Las cancelaciones con menos de 24 horas o las ausencias se consideran sesiones utilizadas y no son reembolsables. Máximo 2 reprogramaciones por mes. Tres o más ausencias en 30 días pueden dar lugar a la terminación del programa.', en:'Cancellations with 24+ hours notice may be rescheduled at no charge. Cancellations under 24 hours or no-shows are considered used sessions and are non-refundable. Maximum 2 reschedules per month. Three or more no-shows in 30 days may trigger program termination.'},
     { title:'5. Política de reembolsos · Refund policy', es:'Antes de la Sesión 1: reembolso total. Desde la Sesión 1 hasta el final de la Semana 3: reembolso proporcional por sesiones no realizadas, menos un cargo administrativo del 15%. A partir de la Semana 4: sin reembolso, independientemente de la razón.', en:'Before Session 1: full refund. From Session 1 through the end of Week 3: prorated refund for undelivered sessions, minus a 15% administrative fee. From Week 4 onward: no refund, regardless of reason for termination.'},
@@ -886,6 +800,9 @@ function showSuccess(fn, ln, email, sig, planLabels, total, mediaVal, dateStr) {
 
   goTo(6);
 }
+
+// ── INIT ──
+applyPrefill();
 </script>
 </body>
 </html>
